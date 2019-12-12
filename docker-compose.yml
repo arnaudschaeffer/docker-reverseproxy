@@ -1,0 +1,22 @@
+version: '2.2'
+
+services:
+  proxy:
+    image: jwilder/nginx-proxy
+    #restart container after crash, useful in staging environment
+    restart: always
+    volumes:
+      #SSL certificate file should go here
+      #- ./certs:/etc/nginx/certs
+      #if needed, override nginx conf
+      #- ./example.conf:/etc/nginx/conf.d/example.conf
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - proxy
+
+networks:
+    proxy:
+        external: true
